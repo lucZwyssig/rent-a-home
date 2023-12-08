@@ -17,7 +17,7 @@ CREATE TABLE rooms (
 CREATE TABLE bookings (
     bookingId INT AUTO_INCREMENT PRIMARY KEY,
     customerFKID INT NOT NULL,
-    roomFKID INT NOT NULL,
+    roomFKID INT NOT NULL UNIQUE,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     FOREIGN KEY (customerFKID) REFERENCES customers(customerId),

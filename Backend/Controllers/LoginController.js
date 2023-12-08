@@ -50,12 +50,13 @@ const register = async (req, res) => {
 
 
 const login = async (req, res) => {
-    const connection = req.app.get("mysqlConnection");
+    try{
+        const connection = req.app.get("mysqlConnection");
     const { username, password } = req.body;
     if (!username || !password) {
         return res.sendStatus(400);
     };
-    const query = "SELECT password FROM customers WHERE username = ?";
+    const query = "SELECT customerId, password FROM customers WHERE username = ?";
     const values = [username];
 
     connection.query(query, values, async (error, results) => {
@@ -79,6 +80,11 @@ const login = async (req, res) => {
 
         res.json({token}).status(200);
     });
+    } catch(error){
+        console.log(error);
+        res.sendStatus(500);
+    }
+    
 }
 
 const verify = (req, res, next) => {
