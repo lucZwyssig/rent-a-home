@@ -18,7 +18,7 @@ const register = async (req, res) => {
         const checkUsernameQuery = "SELECT COUNT(*) as count FROM customers WHERE username = ?";
         const checkUsernameValues = [username];
 
-        connection.query(checkUsernameQuery, checkUsernameValues, async (checkError, checkResults, checkFields) => {
+        connection.query(checkUsernameQuery, checkUsernameValues, async (checkError, checkResults) => {
             if (checkError) {
                 console.log(checkError);
                 return res.sendStatus(500);
@@ -31,7 +31,7 @@ const register = async (req, res) => {
             const insertQuery = "INSERT INTO customers (username, password) VALUES (?, ?)";
             const insertValues = [username, hashedPassword];
 
-            connection.query(insertQuery, insertValues, (insertError, insertResults, insertFields) => {
+            connection.query(insertQuery, insertValues, (insertError, insertResults) => {
                 if (insertError) {
                     console.log(insertError);
                     return res.sendStatus(500);
@@ -39,12 +39,7 @@ const register = async (req, res) => {
 
                 const userId = insertResults.insertId;
                 const token = createToken(userId);
-
-                res.cookie("jwtToken", token, {
-                    withCredentials: true,
-                    sameSite: 'strict',
-                });
-                res.sendStatus(201);
+                res.json({token}).status(201);
             });
         });
     } catch (error) {
@@ -63,7 +58,7 @@ const login = async (req, res) => {
     const query = "SELECT password FROM customers WHERE username = ?";
     const values = [username];
 
-    connection.query(query, values, async (error, results, fields) => {
+    connection.query(query, values, async (error, results) => {
         if (error) {
             console.log(error);
             return res.sendStatus(500);
@@ -80,22 +75,32 @@ const login = async (req, res) => {
 
         const userId = results[0].customerId;
         const token = createToken(userId);
-        res.cookie("jwtToken", token, {
-            withCredentials: true,
-            sameSite: 'strict',
-        });
+        
 
-        res.sendStatus(200);
+        res.json({token}).status(200);
     });
-
-
-
-
-
-
 }
+
+const verify = (req, res, next) => {
+    const bearerHeader = req.headers["authorization"];
+    if (typeof bearerHeader !== "undefined") {
+        const bearer = bearerHeader.split(" ");
+        const bearerToken = bearer[1];
+        try {
+            const decodedToken = jwt.verify(bearerToken, process.env.JWT);
+            req.verifiedToken = decodedToken;
+            next();
+        } catch (error) {
+            res.sendStatus(403);
+        }
+    } else {
+        res.sendStatus(403);
+    }
+};
+
 
 module.exports = {
     register,
-    login
+    login,
+    verify
 }

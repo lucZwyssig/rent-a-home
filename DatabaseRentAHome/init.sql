@@ -23,3 +23,8 @@ CREATE TABLE bookings (
     FOREIGN KEY (customerFKID) REFERENCES customers(customerId),
     FOREIGN KEY (roomFKID) REFERENCES rooms(roomId)
 );
+
+INSERT INTO rooms (name, description)
+VALUES ("room1", "room1 description"),
+("room2", "room2 description"),
+("room3", "room3 description");
