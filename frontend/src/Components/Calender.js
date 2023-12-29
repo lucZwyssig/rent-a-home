@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 export default function Calendar() {
+    const { room } = useParams();
     const [currentMonth, setCurrentMonth] = useState(new Date());
-    const [monthWeeks, setMonthWeeks] = useState([]);
+    const [weeks, setMonthWeeks] = useState([]);
+    const [bookings, setBookings] = useState([]);
+    const backendURL = "http://localhost:3001";
 
     function handleNextMonth() {
         const nextMonth = new Date(currentMonth);
@@ -21,23 +26,40 @@ export default function Calendar() {
             currentWeek.push(null);
         }
         while (day.getMonth() === month.getMonth()) {
-            currentWeek.push(new Date(day));
+            const reserved = bookings.some((booking) => {
+                const startDate = new Date(booking.start_date);
+                const endDate = new Date(booking.end_date);
+                return (day.getTime() >= startDate.getTime() && day.getTime() <= endDate.getTime());
+            });
 
-            if (day.getDay() === 6) {
+            currentWeek.push({ date: new Date(day), reserved: reserved });
+
+            if (day.getDay() === 6 || day.getMonth() !== month.getMonth()) {
                 weeksArray.push(currentWeek);
                 currentWeek = [];
             }
+
             day.setDate(day.getDate() + 1);
         }
         if (currentWeek.length > 0) {
             weeksArray.push(currentWeek);
-        }
+        };
 
         setMonthWeeks(weeksArray);
-    }
-    //add the space at end
+    };
+
+    async function getBookings() {
+        try {
+            const response = await axios.get(`${backendURL}/api/rooms`);
+            setBookings(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     useEffect(() => {
         handleSetWeeks(new Date());
+        getBookings();
     }, []);
 
     return (
@@ -55,16 +77,18 @@ export default function Calendar() {
                     </tr>
                 </thead>
                 <tbody>
-                {monthWeeks.map((week, weekIndex) => (
-                    <tr key={weekIndex}>
-                        {week.map((day, index) => (
-                            <td key={index}>{day ? day.getDate() : ""}</td>
-                        ))}
-                    </tr>
-                ))}
+                    {weeks.map((week, weekIndex) => (
+                        <tr key={weekIndex}>
+                            {week.map((day, index) => (
+                                <td key={index}>{day ? day.date.getDate() : ""}</td>
+                            ))}
+                        </tr>
+                    ))}
+                    {currentMonth.toLocaleDateString()}
                 </tbody>
             </table>
             <button onClick={handleNextMonth}>Next Month</button>
+            <button onClick={() => console.log(weeks)}>Weeks</button>
         </div>
     );
 }

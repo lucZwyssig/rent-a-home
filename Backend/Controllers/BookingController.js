@@ -1,18 +1,16 @@
-
-
 const postBooking = async (req, res) => {
     try {
         const { roomForeignKey, startDate, endDate } = req.body;
         const customerForeignKey = req.verifiedToken.userId;
         const connection = req.app.get("mysqlConnection");
 
-        if (!roomForeignKey || !startDate || !endDate || !customerForeignKey) {
+        if (!roomForeignKey || !startDate || !endDate || !customerForeignKey || new Date(startDate) > new Date(endDate)) {
             return res.sendStatus(400);
         }
 
         
 
-        const checkBookingQuery = "SELECT * FROM bookings WHERE roomFKID = ? AND ? < end_date AND ? > start_date"; //check exacter if start date is after end date
+        const checkBookingQuery = "SELECT * FROM bookings WHERE roomFKID = ? AND ? < end_date AND ? > start_date"; 
         const checkBookingValues = [roomForeignKey, startDate, endDate];
 
         connection.query(checkBookingQuery, checkBookingValues, async (error, results) => {

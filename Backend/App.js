@@ -1,8 +1,15 @@
 const express = require("express");
-
+const cors = require("cors");
 const app = express();
 
 app.use(express.json());
+
+app.use(cors({
+    origin: ["http://localhost:3000", ],
+    methods: ["GET", "POST", "DELETE"],
+    credentials: true
+}));
+
 
 const mysql = require("mysql2");
 
@@ -15,7 +22,8 @@ const connection = mysql.createConnection({
     host: process.env.MYSQL_HOST,
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE
+    database: process.env.MYSQL_DATABASE,
+    timezone : "+00:00"
 });
 
 

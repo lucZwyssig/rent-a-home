@@ -8,6 +8,7 @@ services:
       MYSQL_DATABASE: ${database}
       MYSQL_USER: ${user}
       MYSQL_PASSWORD: ${password}
+      TZ: "Europe/Bern"
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:

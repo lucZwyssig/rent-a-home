@@ -88,14 +88,32 @@ const login = async (req, res) => {
 }
 
 const verify = (req, res, next) => {
+    const connection = req.app.get("mysqlConnection");
     const bearerHeader = req.headers["authorization"];
+
     if (typeof bearerHeader !== "undefined") {
         const bearer = bearerHeader.split(" ");
         const bearerToken = bearer[1];
+
         try {
             const decodedToken = jwt.verify(bearerToken, process.env.JWT);
             req.verifiedToken = decodedToken;
-            next();
+
+            const checkUserQuery = "SELECT * FROM customers WHERE customerId = ?";
+            const checkUserValues = [decodedToken.userId];
+
+            connection.query(checkUserQuery, checkUserValues, async (error, results) => {
+                if (error) {
+                    console.log(error);
+                    return res.sendStatus(500);
+                }
+
+                if (results.length === 0) {
+                    return res.sendStatus(404);
+                } else {
+                    next();
+                }
+            });
         } catch (error) {
             res.sendStatus(403);
         }
@@ -104,9 +122,8 @@ const verify = (req, res, next) => {
     }
 };
 
-
 module.exports = {
     register,
     login,
     verify
-}
+};
