@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 export default function Calendar() {
-    const { room } = useParams();
+    const { roomName } = useParams();
     const [currentMonth, setCurrentMonth] = useState(new Date());
     const [weeks, setMonthWeeks] = useState([]);
     const [bookings, setBookings] = useState([]);
@@ -26,10 +26,10 @@ export default function Calendar() {
             currentWeek.push(null);
         }
         while (day.getMonth() === month.getMonth()) {
-            const reserved = bookings.some((booking) => {
+            const reserved = bookings.filter((booking) => booking.name === roomName).some((booking) => {
                 const startDate = new Date(booking.start_date);
                 const endDate = new Date(booking.end_date);
-                return (day.getTime() >= startDate.getTime() && day.getTime() <= endDate.getTime());
+                return (day.getTime() >= startDate.getTime() && day.getTime() <= endDate.getTime()); 
             });
 
             currentWeek.push({ date: new Date(day), reserved: reserved });

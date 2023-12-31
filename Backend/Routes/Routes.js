@@ -12,4 +12,5 @@ router.post("/login", LoginController.login);
 router.get("/rooms", RoomController.getRooms);
 router.post("/bookings", LoginController.verify, BookingController.postBooking);
 router.get("/bookings", LoginController.verify, BookingController.getBookings);
+router.get("/rooms/:id", RoomController.getSingleRoom);
 module.exports = router;
