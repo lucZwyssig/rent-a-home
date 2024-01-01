@@ -1,0 +1,19 @@
+.reserved{
+    background-color: red;
+}
+
+.unreserved{
+    cursor: pointer;
+}
+.selected{
+    background-color: green;
+    cursor: pointer;
+}
+
+.reserved, .unreserved, .selected{
+    user-select: none;
+}
+
+
+
+

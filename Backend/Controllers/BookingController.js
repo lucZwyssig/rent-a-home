@@ -8,10 +8,12 @@ const postBooking = async (req, res) => {
             return res.sendStatus(400);
         }
 
+
+
+        const checkBookingQuery = "SELECT * FROM bookings WHERE roomFKID = ? AND NOT (end_date < ? OR start_date > ?)";
+        const checkBookingValues = [roomForeignKey, startDate, endDate];
         
 
-        const checkBookingQuery = "SELECT * FROM bookings WHERE roomFKID = ? AND ? < end_date AND ? > start_date"; 
-        const checkBookingValues = [roomForeignKey, startDate, endDate];
 
         connection.query(checkBookingQuery, checkBookingValues, async (error, results) => {
             if (error) {
@@ -22,7 +24,7 @@ const postBooking = async (req, res) => {
             if (results.length > 0) {
                 return res.sendStatus(409);
             } else {
-                
+
                 const postBookingQuery = "INSERT INTO bookings (customerFKID, roomFKID, start_date, end_date) VALUES (?, ?, ?, ?)";
                 const postBookingValues = [customerForeignKey, roomForeignKey, startDate, endDate];
 
@@ -44,18 +46,18 @@ const postBooking = async (req, res) => {
     }
 };
 
-const getBookings = async (req, res) => {    
+const getBookings = async (req, res) => {
     const customerForeignKey = req.verifiedToken.userId;
     const connection = req.app.get("mysqlConnection");
 
-    if(!customerForeignKey){
+    if (!customerForeignKey) {
         return res.sendStatus(400);
     };
 
     const getBookingsQuery = "SELECT * FROM bookings where customerFKID = ?";
     const getBookingsValues = [customerForeignKey];
     connection.query(getBookingsQuery, getBookingsValues, async (error, results) => {
-        if(error){
+        if (error) {
             console.log(error);
             return res.sendStatus(500);
         };
