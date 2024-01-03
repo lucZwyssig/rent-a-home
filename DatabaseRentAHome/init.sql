@@ -12,7 +12,8 @@ CREATE TABLE rooms (
     roomId INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL UNIQUE,
     description TEXT NOT NULL,    
-    price DECIMAL(10, 2) NOT NULL
+    price DECIMAL(10, 2) NOT NULL,
+    image VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE bookings (
@@ -35,7 +36,7 @@ CREATE TABLE payments (
     FOREIGN KEY (bookingId) REFERENCES bookings(bookingId)
 );
 
-INSERT INTO rooms (name, description, price)
-VALUES ("room1", "room1 description", 30.50),
-("room2", "room2 description", 30.50),
-("room3", "room3 description", 30.50);
+INSERT INTO rooms (name, description, price, image)
+VALUES ("room1", "room1 description", 30.50, "test.jpg"),
+("room2", "room2 description", 30.50, "test.jpg"),
+("room3", "room3 description", 30.50, "test.jpg");

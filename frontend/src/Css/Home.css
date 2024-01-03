@@ -1,13 +1,38 @@
-.HomepageBackground{
+.Background{
     min-height: 60vh;
 }
 
-.HomepageBackgroundRight{
+.BackgroundRight{
     background-color: rgba(175, 193, 192, 0.91);
 }
 
-.HomepageBackgroundLeft{
+.BackgroundLeft{
     background-image: url("../Images/test.jpg");
     background-size: cover;
     background-position: center;
+}
+
+.RoomsHeader{
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}
+
+.Rooms{
+    
+}
+
+.RoomCol{
+    padding: 20px;
+    
+}
+
+.RoomDiv{
+    background-color: #8a9bad;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.RoomDiv img{
+    width: 40%;
 }

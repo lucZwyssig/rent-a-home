@@ -24,25 +24,38 @@ function Home(){
         <Container fluid>
             <Header/>
 
-            <Row className="HomepageBackground">
-                <Col className="HomepageBackgroundLeft col-12 col-sm-7">
+            <Row className="Background">
+                <Col className="BackgroundLeft col-12 col-sm-7">
                 </Col>
-                <Col className="HomepageBackgroundRight col-12 col-sm-5">
+                <Col className="BackgroundRight col-12 col-sm-5">
                     wefhjrjif
                     wjui
                     wegjuijeiugjuerj
                     wejguierjuegijerigj 
                 </Col>
             </Row>
-            <Row className="HomepageRooms">
+            <Row className="Rooms">
+                <div className="RoomsHeader">
                 <h1>
                     Our rooms
                 </h1>
+                </div>
+                
                 {rooms.map((room, index) => {
                     return(
-                        <div key={index}>
-                            room
-                        </div>
+                        <Col key={index} className="col-12 col-sm-6 RoomCol">
+                            <div className="RoomDiv">
+                            <div>
+                                <h2>
+                                    {room.name}
+                                </h2>
+                                <p>{room.description}</p>
+                                <a href={`/room/${room.roomId}`}>To Room</a>
+                            </div>
+                            <img src={require(`../Images/${room.image}`)}></img>
+                            </div>
+                            
+                        </Col>
                     );
                 })}
             </Row>
