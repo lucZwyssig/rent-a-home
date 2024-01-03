@@ -1,4 +1,4 @@
-const getRooms = async (req, res) => {
+const getRoomsBookings = async (req, res) => {
     const connection = req.app.get("mysqlConnection");
 
     const getRoomsQuery = "SELECT rooms.roomId, rooms.name, rooms.description, bookings.bookingId, CONVERT_TZ(bookings.start_date, '+00:00', '+00:00') as start_date, CONVERT_TZ(bookings.end_date, '+00:00', '+00:00') as end_date FROM rooms LEFT JOIN bookings ON rooms.roomId = bookings.roomFKID;";
@@ -12,6 +12,20 @@ const getRooms = async (req, res) => {
         };
     });
 };
+
+const getRooms = async (req, res) => {
+    const connection = req.app.get("mysqlConnection");
+    const getRoomsQuery = "SELECT rooms.roomId, rooms.name, rooms.description FROM rooms";
+
+    connection.query(getRoomsQuery, async (error, results) => {
+        if(error){
+            console.log("error with query", error);
+            res.sendStatus(500);
+        } else{
+            res.json(results);
+        }
+    })
+}
 
 const getSingleRoom = async (req, res) => {
     const roomId = req.params.id;
@@ -33,5 +47,6 @@ const getSingleRoom = async (req, res) => {
 
 module.exports = {
     getRooms,
+    getRoomsBookings,
     getSingleRoom
 };

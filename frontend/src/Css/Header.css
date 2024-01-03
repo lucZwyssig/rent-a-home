@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=Tangerine');
+
+.Header{
+    display: flex;
+    justify-content: left;
+    gap: 5%;
+    align-items: center;
+    padding: 10px;
+}
+.Header h1{
+    font-family: "Tangerine";
+    font-style: italic;
+}
+
+.Links{
+    display: flex;
+    gap: 20px;
+}
+
+
+.currentPage{
+    color: blue;
+}

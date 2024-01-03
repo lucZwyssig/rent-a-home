@@ -93,7 +93,7 @@ export default function Calendar({ room, backendURL, roomForeignKey }) {
             "Authorization": `Bearer ${storedToken}`
         };
         const formattedStartDate = new Date(startDate).toISOString().split("T")[0];
-        const formattedEndDate = new Date(endDate).toISOString().split("T")[0   ];
+        const formattedEndDate = new Date(endDate).toISOString().split("T")[0];
     
         try {
             const response = await axios.post(`${backendURL}/api/bookings`, 
@@ -110,11 +110,9 @@ export default function Calendar({ room, backendURL, roomForeignKey }) {
             console.log(response);
         } catch (error) {
             console.log(error);
-        }
-    }
+        };
+    };
     
-
-
     useEffect(() => {
         setBookings(room)
         handleSetWeeks(new Date());
@@ -131,6 +129,8 @@ export default function Calendar({ room, backendURL, roomForeignKey }) {
         if (date <= startDate) {
             setEndDate(startDate);
         } else {
+            const firstReserved = bookings.filter((booking) => new Date(booking.date) > new Date(startDate) && new Date(booking.date) < new Date(date));
+            console.log(firstReserved);
             setEndDate(date);
         }
     }
@@ -142,7 +142,7 @@ export default function Calendar({ room, backendURL, roomForeignKey }) {
                 let date = new Date(currentMonth);
                 date.setDate(i);
                 selectedDatesArray.push(date);
-            }
+            };
             setSelected(selectedDatesArray);
         }
     }, [endDate]);

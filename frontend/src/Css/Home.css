@@ -1,0 +1,13 @@
+.HomepageBackground{
+    min-height: 60vh;
+}
+
+.HomepageBackgroundRight{
+    background-color: rgba(175, 193, 192, 0.91);
+}
+
+.HomepageBackgroundLeft{
+    background-image: url("../Images/test.jpg");
+    background-size: cover;
+    background-position: center;
+}
