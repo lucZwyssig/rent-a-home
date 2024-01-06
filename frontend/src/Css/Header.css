@@ -19,12 +19,17 @@
     font-style: italic;
 }
 
+.Header a {
+    color: rgb(45, 47, 52);
+}
+
 .Links{
     display: flex;
     gap: 20px;
 }
 
 
-.currentPage{
-    color: blue;
+.Header .currentPage{
+    color: rgb(152, 88, 93);
 }
+

@@ -4,6 +4,9 @@
 
 .BackgroundRight{
     background-color: rgba(175, 193, 192, 0.91);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .BackgroundLeft{

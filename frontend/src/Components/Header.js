@@ -8,8 +8,8 @@ export default function Header(){
                 Rent-A-Home Dübendorf
             </h1>
             <div className="Links">
+            <a href="/" className={location.pathname === "/" ? "currentPage" : ""}>Home</a> 
             <a href="/login" className={location.pathname === "/login" ? "currentPage" : ""}>Login</a>
-            <a href="/" className={location.pathname === "/" ? "currentPage" : ""}>Home</a>
             <a href="/contact" className={location.pathname === "/contact" ? "currentPage" : ""}>Contact</a>
 
             </div>

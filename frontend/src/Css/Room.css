@@ -1,0 +1,44 @@
+.ImageRow{
+    padding: 8%;
+}
+.ImageColLeft, .ImageColRight{
+    height: 60vh;
+    padding-bottom: 15px;
+
+}
+
+.ImageColLeft{
+    position: relative;
+}
+
+.ImageColRight{
+    flex-direction: column;
+    gap: 15px;
+}
+
+.Tfi{
+    display: flex;
+    border: none;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 40px;
+    border-radius: 2px;
+    height: 40px;
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+}
+
+.ImageColLeft img{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.ImageColRight img{
+    object-fit: cover;
+    height: 50%;
+    width: 100%;
+}
+

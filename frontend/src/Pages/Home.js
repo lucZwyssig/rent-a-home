@@ -5,6 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 function Home(){
     //colors: #49A39A
+    //link for colors: https://mycolor.space/?hex=%23B6C6C5&sub=1
     const backendURL = "http://localhost:3001"
     const [rooms, setRooms] = useState([]);
 
@@ -28,10 +29,12 @@ function Home(){
                 <Col className="BackgroundLeft col-12 col-sm-7">
                 </Col>
                 <Col className="BackgroundRight col-12 col-sm-5">
-                    wefhjrjif
-                    wjui
-                    wegjuijeiugjuerj
-                    wejguierjuegijerigj 
+                    <h3>
+                        Luxury, in Dübendorf
+                    </h3>
+                    <p>Stay at the Rent-a-Home location in Dübendorf and enjoy our three top of the line, luxurious rooms that offer quick and easy access
+                        to several of Switzerlands most renoun hiking trai
+                    </p>
                 </Col>
             </Row>
             <Row className="Rooms">
@@ -56,6 +59,7 @@ function Home(){
                             </div>
                             
                         </Col>
+                        
                     );
                 })}
             </Row>
